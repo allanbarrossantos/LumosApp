@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1012412552880",
+    "firebase_url": "https://cameraxthunder.firebaseio.com",
+    "project_id": "cameraxthunder",
+    "storage_bucket": "cameraxthunder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012412552880:android:03af9511027bdfdd6f0d75",
+        "android_client_info": {
+          "package_name": "com.lumos.lumosapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012412552880-5jt48ll9t5p6923r7n9u5t18fqh1g6ov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lumos.lumosapp",
+            "certificate_hash": "858d20c40e933d32316cbc6d43167449b75b7351"
+          }
+        },
+        {
+          "client_id": "1012412552880-ps6pt96ds4trrgmq95v5d8ajlmfjbkn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdhcImIxHcOLoZ69VXQilAdIci4-zeL_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012412552880-ps6pt96ds4trrgmq95v5d8ajlmfjbkn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
