@@ -11,8 +11,8 @@ public class TextoParaFala implements TextToSpeech.OnInitListener {
     @Override
     public void onInit(int i) {
 
-
     }
+
     public void speekText(TextToSpeech textToSpeech,String msg ){
 
         textToSpeech.setLanguage(Locale.getDefault());

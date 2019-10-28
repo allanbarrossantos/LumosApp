@@ -29,3 +29,5 @@ public class Produtos {
         this.barCode = barCode;
     }
 }
+
+

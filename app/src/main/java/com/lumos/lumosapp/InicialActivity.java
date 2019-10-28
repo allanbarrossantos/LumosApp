@@ -18,7 +18,7 @@ public class InicialActivity extends AppCompatActivity implements TextToSpeech.O
     private Button btnRecProduto;
     private Button btnRecValidade;
     private Context context;
-     TextToSpeech textToSpeech;
+    private TextToSpeech textToSpeech;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -47,8 +47,8 @@ public class InicialActivity extends AppCompatActivity implements TextToSpeech.O
             btnRecValidade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  //  Intent intent = new Intent(context, ReconheceValidadeActivity.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(context, ReconheceValidadeActivity.class);
+                    startActivity(intent);
                 }
             });
         }catch (Exception e){

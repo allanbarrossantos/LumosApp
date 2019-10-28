@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     public void onInit(int i) {
 
-        speaker.speekText(textToSpeech,"Aponte a camera para onde você acredita estar o codigo de barras da mercadoria...." +
+        speaker.speekText(textToSpeech,"Aponte a camera para onde você acredita estar o código de barras da mercadoria...." +
                 "aguarde aproximadamente 2 segundos e toque na tela para que eu possa reconhecê-lo");
 
 
