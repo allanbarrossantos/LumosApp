@@ -27,6 +27,7 @@ import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReconheceValidadeActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
@@ -123,6 +124,7 @@ cameraView.addCameraKitListener(new CameraKitEventListener() {
             }
             Log.i("textoEncontrado", "" + textoEncontrado);
             String resultString = limparString(textoEncontrado);
+            //TesteMultiplasDatas(resultString);
             Log.i("textoEncontrado", "resultado" + resultString);
             String dataValidade = ProcessaDataValidade(resultString);
 
@@ -130,6 +132,28 @@ cameraView.addCameraKitListener(new CameraKitEventListener() {
             Log.d("ProcTextoEncontrado", "" + e);
         }
         }
+
+    private void TesteMultiplasDatas(String resultString) {
+        String dataFabricacao;
+        String dataValidade;
+
+        int contador = resultString.length();
+
+
+        for(int i = 0;i<contador;i++){
+            //usamos substring pra pegar um caractere, passando como parâmetro,
+            //o primeiro caractere a ser pega, até a ultima.
+            //fiz um if para verificar se o caractere é igual a " "
+            if (resultString.substring(i,i+1).equals("/")){
+
+
+                int posicao = i+1;
+                System.out.println("Está na posição " + posicao);
+                System.out.println(resultString.substring(0, posicao));
+            }}
+
+
+    }
 
     private String ProcessaDataValidade(String resultString) {
         String dia;
@@ -141,12 +165,26 @@ cameraView.addCameraKitListener(new CameraKitEventListener() {
 
         String[] subString = resultString.split("/");
 
+           for(int i=0;i<subString.length;i++){
+               if(subString[i].equals("")){
+                   subString[i] = subString[i+1];
+                   subString[i+1] = subString[i+2];
+                   subString[i+2] = subString[i+3];
+               }
+
+           }
         dia = subString[0].substring(subString[0].length()-2);
         mes = subString[1];
 
         if(subString[2].length()>2){
             ano = subString[2].substring(0,4);
-
+            int anoInt = Integer.parseInt(ano);
+            Date date = new Date();
+            int anoatual = date.getYear();
+            if((anoInt-anoatual)>30){
+                ano = subString[2].substring(0,2);
+                ano = "20"+ano;
+            }
         } else{
             ano = subString[2].substring(0,2);
             ano = "20"+ano;
@@ -165,9 +203,14 @@ cameraView.addCameraKitListener(new CameraKitEventListener() {
         Log.i("textoEncontrado", "Ano " + ano);
         Log.i("textoEncontrado", "data  " + data);
 
-        Toast.makeText(this, ""+data, Toast.LENGTH_SHORT).show();
-        speaker.speekText(textToSpeech,"teste de fala ");
-        speaker.speekText(textToSpeech,"A data de validade é "+data);
+        int diaInt = Integer.parseInt(dia);
+        int mesInt = Integer.parseInt(mes);
+        if(diaInt>31 || mesInt>12){
+            speaker.speekText(textToSpeech,"Desculpe, nao encontrei uma data válida");
+        }else{ Toast.makeText(this, ""+data, Toast.LENGTH_SHORT).show();
+
+            speaker.speekText(textToSpeech,"A data de validade é "+data);
+            }
         return data;
     }
 
@@ -270,6 +313,7 @@ cameraView.addCameraKitListener(new CameraKitEventListener() {
 
         string = string.replace(" ", "");
         string = string.replace(",", "");
+        string = string.replace(".", "/");
 
 
         resultString = string;

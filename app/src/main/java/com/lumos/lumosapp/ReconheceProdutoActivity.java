@@ -45,28 +45,35 @@ import java.util.List;
 
 
 
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class ReconheceProdutoActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+
+    //Declaração de variáveis
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private CameraView cameraView;
     private Button btnDetect;
     private TextoParaFala speaker;
     private TextToSpeech textToSpeech;
+
     @Override
     protected void onResume() {
         super.onResume();
+        //inicia a camera assim que a activity é iniciada
         cameraView.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        // Pausa a camera assim que a activity é encerrada
         cameraView.stop();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //inicializa as variaveis com suas respectivas views
         setContentView(R.layout.activity_main);
         speaker = new TextoParaFala();
         Context context = getApplicationContext();
@@ -76,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             cameraView = findViewById(R.id.camera_View);
             btnDetect = findViewById(R.id.button_Detect);
-            //listViewPesquisa = findViewById(R.id.listViewItem_id);
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference().child("Produtos");
             btnDetect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     cameraView.start();
+                    //executa o comando para capiturar a imagem
                     cameraView.captureImage();
                 }
             });
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReconheceProdutoActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -164,16 +171,22 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Toast.makeText(MainActivity.this, "onDataChange", Toast.LENGTH_SHORT).show();
-                  for(DataSnapshot objSnapshot : dataSnapshot.getChildren()){
-                        Produtos produtos = objSnapshot.getValue(Produtos.class);
-                      speaker.speekText(textToSpeech,produtos.getDescricao());
+                    Toast.makeText(ReconheceProdutoActivity.this, "onDataChange", Toast.LENGTH_SHORT).show();
+
+                    if(dataSnapshot.getValue()==null){
+                        speaker.speekText(textToSpeech,"produto não cadastrado em nossa base de dados");
+
+                    } else {
+                        for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
+                            Produtos produtos = objSnapshot.getValue(Produtos.class);
+                            speaker.speekText(textToSpeech, produtos.getDescricao());
+                        }
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(MainActivity.this, "onCancelled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReconheceProdutoActivity.this, "onCancelled", Toast.LENGTH_SHORT).show();
                 }
             });
     }
@@ -182,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void onInit(int i) {
 
         speaker.speekText(textToSpeech,"Aponte a camera para onde você acredita estar o código de barras da mercadoria...." +
-                "aguarde aproximadamente 2 segundos e toque na tela para que eu possa reconhecê-lo");
+                "aguarde aproximadamente 2 segundos e toque na tela para que eu possa identificá-lod");
 
 
 

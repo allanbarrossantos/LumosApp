@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ReconheceValidadeActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ReconheceProdutoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".InicialActivity">
             <intent-filter>
